@@ -10,7 +10,15 @@ public class Fractal : MonoBehaviour
     public int maxDepth;
     public float childScale;
 
+    public float spawnProbability;
+
+    public float maxRotationSpeed;
+
+    public float maxTwist;
+
     private int depth;
+
+    private float rotationSpeed;
 
     private static Vector3[] childDirections = {
         Vector3.up,
@@ -31,6 +39,8 @@ public class Fractal : MonoBehaviour
     private Material[,] materials;
 
     private void Start() {
+        rotationSpeed = Random.Range(-maxRotationSpeed, maxRotationSpeed);
+        transform.Rotate(Random.Range(-maxTwist, maxTwist), 0f, 0f);
         if (materials == null) {
             InitializeMaterials();
         }
@@ -39,6 +49,11 @@ public class Fractal : MonoBehaviour
         if (depth < maxDepth) {
             StartCoroutine(CreateChildren());
         }
+    }
+
+    private void Update() {
+        //30 degrees per second
+        transform.Rotate(0f, rotationSpeed * Time.deltaTime, 0f);
     }
 
     private void Initialize(Fractal parent, int childIndex) {
@@ -53,13 +68,18 @@ public class Fractal : MonoBehaviour
         transform.localPosition =
             childDirections[childIndex] * (0.5f + 0.5f * childScale);
         transform.localRotation = childOrientations[childIndex];
+        spawnProbability = parent.spawnProbability;
+        maxRotationSpeed = parent.maxRotationSpeed;
+        maxTwist = parent.maxTwist;
     }
 
     private IEnumerator CreateChildren() {
         for (int i = 0; i < childDirections.Length; i++) {
-            yield return new WaitForSeconds(Random.Range(0.1f, 0.5f));
-            new GameObject("Fractal Child").AddComponent<Fractal>().
-                Initialize(this, i);
+            if (Random.value < spawnProbability) {
+                yield return new WaitForSeconds(Random.Range(0.1f, 0.5f));
+                new GameObject("Fractal Child").AddComponent<Fractal>().
+                    Initialize(this, i);
+            }
         }
     }
 
