@@ -5,3 +5,5 @@ Different projects from catlikecoding.com
 * [Mathematical Surfaces](https://catlikecoding.com/unity/tutorials/basics/mathematical-surfaces/)
 * [Fractals](https://catlikecoding.com/unity/tutorials/constructing-a-fractal/)
 * [Frames Per Second](https://catlikecoding.com/unity/tutorials/frames-per-second/)
+* [Sliding a Sphere](https://catlikecoding.com/unity/tutorials/movement/sliding-a-sphere/)
+* [Sphere Physics](https://catlikecoding.com/unity/tutorials/movement/physics/)
