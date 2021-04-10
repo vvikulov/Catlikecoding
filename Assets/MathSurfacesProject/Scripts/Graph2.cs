@@ -18,7 +18,9 @@ namespace GraphG
         [SerializeField, Min(0f)]
         protected float m_functionDuration = 1f, m_transitionDuration = 1f;
         [SerializeField]
-        TransitionMode m_transitionMode = TransitionMode.Cycle;
+        private TransitionMode m_transitionMode = TransitionMode.Cycle;
+        [SerializeField]
+        private bool _isChange = true;
 
         private Transform[] m_points;
         private float m_duration;
@@ -46,29 +48,36 @@ namespace GraphG
 
         private void Update ()
         {
-            m_duration += Time.deltaTime;
-            if(m_transitioning)
+            if(!_isChange)
             {
-                if (m_duration >= m_transitionDuration)
-                {
-                    m_duration -= m_transitionDuration;
-                    m_transitioning = false;
-                }
-            }
-            else if (m_duration >= m_functionDuration)
-            {
-                m_duration -= m_functionDuration;
-                m_transitioning = true;
-                m_transitionFunction = m_function;
-                PickNextFunction();
-            }
-            if (m_transitioning)
-            {
-                UpdateFunctionTransition();
+                UpdateFunction();
             }
             else
             {
-                UpdateFunction();
+                m_duration += Time.deltaTime;
+                if (m_transitioning)
+                {
+                    if (m_duration >= m_transitionDuration)
+                    {
+                        m_duration -= m_transitionDuration;
+                        m_transitioning = false;
+                    }
+                }
+                else if (m_duration >= m_functionDuration)
+                {
+                    m_duration -= m_functionDuration;
+                    m_transitioning = true;
+                    m_transitionFunction = m_function;
+                    PickNextFunction();
+                }
+                if (m_transitioning)
+                {
+                    UpdateFunctionTransition();
+                }
+                else
+                {
+                    UpdateFunction();
+                }
             }
         }
         #endregion
