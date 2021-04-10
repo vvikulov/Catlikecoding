@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/FramesPerSecond/FramesPerSecond.unity
-    guid: 7dbf098acc1672042b73788011790cc2
+    path: Assets/MathSurfacesProject/Scenes/MathSurfacesMain.unity
+    guid: de8f830c81525cc478f4bfca217c9ddc
   m_configObjects: {}
